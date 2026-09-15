@@ -1,0 +1,29 @@
+{
+  "name": "webpack-baseline",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack.prod.js",
+    "dev": "webpack serve --config webpack.dev.js",
+    "deploy": "echo \"Add the following command to the \"deploy\" script: git subtree push --prefix dist origin <branch-for-deploying>\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taimankj/webpack-baseline.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/taimankj/webpack-baseline/issues"
+  },
+  "homepage": "https://github.com/taimankj/webpack-baseline#readme",
+  "devDependencies": {
+    "webpack": "^5.110.3",
+    "webpack-cli": "^7.2.3",
+    "webpack-dev-server": "^6.0.0",
+    "webpack-merge": "^6.0.1"
+  }
+}
