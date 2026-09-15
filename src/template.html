@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+  </head>
+  <body>
+    <aside>
+      <ul>
+        <li><button id="new-task">New Task</button></li>
+        <li><button id="new-project">New Project</button></li>
+        <li>
+          Projects
+          <button id="new-project">
+            <img src="./images/add.svg" alt="" />
+          </button>
+        </li>
+        <li>
+          <!-- Projects rendere here -->
+          <ul class="projects"></ul>
+        </li>
+      </ul>
+    </aside>
+    <main>
+      <header class="project-info">
+        <!-- Project title renders here -->
+        <h1 class="project-title"></h1>
+        <button id="new-task">
+          <img src="./images/add.svg" alt="" />
+        </button>
+      </header>
+      <!-- Project tasks render here -->
+      <article class="project-tasks"></article>
+    </main>
+  </body>
+</html>
