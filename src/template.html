@@ -7,27 +7,48 @@
   </head>
   <body>
     <aside>
-      <ul>
-        <li><button id="new-task">New Task</button></li>
-        <li><button id="new-project">New Project</button></li>
-        <li>
+      <ul class="nav">
+        <li class="nav-btn-wrapper">
+          <button class="nav-btn">New Task</button>
+        </li>
+        <li class="nav-btn-wrapper">
+          <button class="nav-btn">New Project</button>
+        </li>
+        <li id="project-nav">
           Projects
-          <button id="new-project">
-            <img src="./images/add.svg" alt="" />
+          <button id="new-project-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <title>plus</title>
+              <path
+                d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"
+                fill="currentColor"
+              />
+            </svg>
           </button>
         </li>
-        <li>
+        <li id="my-projects-wrapper">
           <!-- Projects rendere here -->
-          <ul class="projects"></ul>
+          <!-- be sure to delete these, when deploying -->
+          <ul class="my-projects">
+            <li>misc</li>
+            <li>bills</li>
+            <li>workouts</li>
+          </ul>
         </li>
       </ul>
     </aside>
     <main>
       <header class="project-info">
         <!-- Project title renders here -->
-        <h1 class="project-title"></h1>
+        <h1 class="project-title">misc</h1>
         <button id="new-task">
-          <img src="./images/add.svg" alt="" />
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <title>plus</title>
+            <path
+              d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"
+              fill="currentColor"
+            />
+          </svg>
         </button>
       </header>
       <!-- Project tasks render here -->

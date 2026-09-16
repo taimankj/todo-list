@@ -1,0 +1,135 @@
+:root {
+  font-size: 32px;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+
+  display: flex;
+}
+
+ul {
+  list-style: none;
+}
+
+aside {
+  color: #aec3b0;
+  flex-grow: 0;
+  width: 250px;
+  background-color: #01161e;
+
+  .nav {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 8px;
+    padding: 0;
+    margin-top: 16px;
+    margin-bottom: 0;
+  }
+
+  button {
+    border: none;
+    background-color: #01161e;
+    font-size: 1rem;
+    padding: 0;
+    color: #aec3b0;
+    cursor: pointer;
+  }
+}
+
+.nav-btn-wrapper {
+  align-self: stretch;
+}
+
+.nav-btn {
+  width: 100%;
+  text-align: start;
+}
+
+.nav-btn:hover {
+  background: #598392;
+  color: white;
+}
+
+#project-nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  #new-project-btn {
+    color: #aec3b0;
+    width: 1rem;
+
+    display: flex;
+    align-items: center;
+  }
+
+  #new-project-btn:hover {
+    /* background: #124559;
+    background: linear-gradient(
+      90deg,
+      rgba(18, 69, 89, 1) 39%,
+      rgba(89, 131, 146, 1) 69%
+    ); */
+    svg {
+      color: white;
+    }
+  }
+}
+
+#my-projects-wrapper {
+  align-self: stretch;
+}
+
+.my-projects {
+  background-color: #124559;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 8px;
+}
+
+main {
+  flex-grow: 1;
+  background: #ff5400;
+  background: linear-gradient(
+    0deg,
+    rgba(255, 84, 0, 1) 24%,
+    rgba(255, 158, 84, 1) 47%,
+    rgba(255, 206, 138, 1) 77%
+  );
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  font-size: 1rem;
+}
+
+.project-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 2rem;
+  max-height: 4rem;
+}
+
+#new-task {
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  color: black;
+  cursor: pointer;
+
+  svg {
+    width: 2rem;
+  }
+}
+
+#new-task:hover {
+  color: white;
+}
