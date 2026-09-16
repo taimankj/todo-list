@@ -23,8 +23,7 @@ export class Project {
           ele.title === task.title &&
           ele.date === task.date &&
           ele.priority === task.priority &&
-          ele.description === task.description &&
-          ele.project.title === task.project.title
+          ele.description === task.description
         ),
     );
   }

@@ -1,10 +1,9 @@
 export class Task {
-  constructor(title, date, priority, description, project) {
+  constructor(title, date, priority, description) {
     this._title = title;
     this._date = date;
     this._priority = priority; // 1 - low, 2 - med, 3 - high
     this._description = description;
-    this._project = project;
   }
 
   get title() {
@@ -37,13 +36,5 @@ export class Task {
 
   set description(description) {
     this._description = description;
-  }
-
-  get project() {
-    return this._project;
-  }
-
-  set project(project) {
-    this._project = project;
   }
 }
