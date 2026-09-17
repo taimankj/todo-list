@@ -16,10 +16,10 @@ ul {
 }
 
 aside {
-  color: #aec3b0;
+  color: white;
   flex-grow: 0;
   width: 250px;
-  background-color: #01161e;
+  background-color: #344e41;
 
   .nav {
     display: flex;
@@ -33,10 +33,10 @@ aside {
 
   button {
     border: none;
-    background-color: #01161e;
+    background-color: transparent;
     font-size: 1rem;
     padding: 0;
-    color: #aec3b0;
+    color: white;
     cursor: pointer;
   }
 }
@@ -61,7 +61,7 @@ aside {
   justify-content: space-between;
 
   #new-project-btn {
-    color: #aec3b0;
+    color: white;
     width: 1rem;
 
     display: flex;
@@ -86,7 +86,8 @@ aside {
 }
 
 .my-projects {
-  background-color: #124559;
+  background-color: #fefae0;
+  color: black;
   display: flex;
   flex-direction: column;
   align-items: end;

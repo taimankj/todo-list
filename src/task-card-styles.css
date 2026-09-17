@@ -1,0 +1,78 @@
+.project-tasks {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: stretch;
+  overflow: auto;
+}
+
+.task-container {
+  display: grid;
+  grid-template-columns: 4fr 0.5fr;
+  padding: 8px;
+  color: white;
+
+  * {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.task-info {
+  display: grid;
+  grid: 40px minmax(75px, 100px) / 2fr 200px 200px;
+  grid-template-areas:
+    "task-title task-date task-priority"
+    "task-description task-description task-description";
+  row-gap: 8px;
+
+  background-color: #588157;
+  border-radius: 5px;
+  padding: 16px;
+  margin-right: 8px;
+}
+
+.task-title {
+  grid-area: task-title;
+}
+
+.task-date {
+  grid-area: task-date;
+}
+
+.task-priority {
+  grid-area: task-priority;
+}
+
+.task-description {
+  grid-area: task-description;
+  background-color: #fefae0;
+  color: black;
+  border-radius: 5px;
+  padding: 8px;
+
+  font-size: 0.8rem;
+}
+
+/* task actions */
+.task-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-evenly;
+
+  button {
+    width: 1rem;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+  }
+
+  button:hover {
+    svg {
+      color: white;
+    }
+  }
+}
