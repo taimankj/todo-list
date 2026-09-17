@@ -8,7 +8,7 @@ export function initializeDefault() {
     "pay bill",
     "2026-09-15",
     "high",
-    "pay auto loan bill",
+    "auto loan bill",
     misc,
   );
   misc.addTask(payBillTask);

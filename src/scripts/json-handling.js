@@ -11,7 +11,7 @@ Projects with tasks stored in the following format
 }
 */
 
-function parseTasks(projTasks) {
+function parseTasksForStorage(projTasks) {
   let tasksObj = {};
 
   projTasks.forEach((task) => {
@@ -21,4 +21,8 @@ function parseTasks(projTasks) {
   return JSON.stringify(tasksObj);
 }
 
-export { parseTasks };
+function convertToObject(project) {
+  return JSON.parse(project);
+}
+
+export { parseTasksForStorage, convertToObject };
