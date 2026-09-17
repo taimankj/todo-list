@@ -2,7 +2,7 @@ export class Task {
   constructor(title, date, priority, description) {
     this._title = title;
     this._date = date;
-    this._priority = priority; // 1 - low, 2 - med, 3 - high
+    this._priority = priority;
     this._description = description;
   }
 

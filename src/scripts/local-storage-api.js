@@ -1,3 +1,11 @@
-export function storeProject(info) {}
+import { parseTasks } from "./json-handling.js";
 
-export function setUpStorage() {}
+function storeProject(project) {
+  localStorage.setItem(project.title, parseTasks(project.tasks));
+}
+
+function clearStorage() {
+  localStorage.removeItem("misc");
+}
+
+export { storeProject, clearStorage };
