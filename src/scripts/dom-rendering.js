@@ -21,7 +21,10 @@ function renderProject(project) {
     taskInfoContainer.className = "task-info";
     taskTitleContainer.className = "task-title";
     dateContainer.className = "task-date";
-    priorityContainer.className = "task-priority";
+    priorityContainer.classList.add(
+      "task-priority",
+      `priority-${task.priority}`,
+    );
     descriptionContainer.className = "task-description";
 
     taskTitleContainer.innerText = task.title;

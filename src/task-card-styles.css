@@ -45,6 +45,21 @@
   grid-area: task-priority;
 }
 
+.priority-high {
+  color: red;
+  text-shadow: rgba(255, 0, 0, 1) 0px 0px 16px;
+}
+
+.priority-medium {
+  color: yellow;
+  text-shadow: rgb(255, 255, 0) 0px 0px 16px;
+}
+
+.priority-low {
+  color: green;
+  text-shadow: rgb(0, 255, 0) 0px 0px 16px;
+}
+
 .task-description {
   grid-area: task-description;
   background-color: #fefae0;
