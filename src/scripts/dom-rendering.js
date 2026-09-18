@@ -1,5 +1,7 @@
 // script will parse projects and tasks from localStorage
+import { isWednesday } from "date-fns";
 import { grabProjectTitles } from "./local-storage-api.js";
+import { configureProjInput } from "./element-configs.js";
 
 // get project in localStorage
 // render project and associated tasks onto main pane
@@ -8,6 +10,7 @@ function renderProject(project) {
   projectTitleContainer.innerText = project.title;
 
   const tasksContainer = document.querySelector(".project-tasks");
+  removeChildren(tasksContainer);
 
   project.tasks.forEach((task) => {
     const taskRootContainer = document.createElement("article");
@@ -29,7 +32,7 @@ function renderProject(project) {
 
     taskTitleContainer.innerText = task.title;
     dateContainer.innerText = task.date;
-    priorityContainer.innerText = task.priority;
+    priorityContainer.innerText = ".";
     descriptionContainer.innerText = task.description;
 
     taskInfoContainer.appendChild(taskTitleContainer);
@@ -42,6 +45,12 @@ function renderProject(project) {
 
     tasksContainer.appendChild(taskRootContainer);
   });
+}
+
+function removeChildren(parent) {
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
 }
 
 function appendTaskActions(taskContainer) {
@@ -73,6 +82,8 @@ function loadProjects() {
   const projects = grabProjectTitles();
   const projectNavContainer = document.querySelector(".my-projects");
 
+  removeChildren(projectNavContainer);
+
   projects.forEach((projectTitle) => {
     const projectTitleContainer = document.createElement("li");
     projectTitleContainer.innerText = projectTitle;
@@ -80,4 +91,32 @@ function loadProjects() {
   });
 }
 
-export { renderProject, loadProjects };
+function appendProjectSubmission() {
+  const projectsPane = document.querySelector(".my-projects");
+  const projectInput = createProjectInput();
+  projectsPane.appendChild(projectInput);
+}
+
+function createProjectInput() {
+  const inputWrapper = document.createElement("li");
+  const inputBox = document.createElement("input");
+
+  configureProjInput(inputBox);
+
+  inputWrapper.appendChild(inputBox);
+  return inputWrapper;
+}
+
+function removeProjectSubmission(projInput) {
+  const newProjContainer = document.querySelector("#new-project").parentNode;
+  if (!newProjContainer) {
+    newProjContainer.parentNode.removeChild(newProjContainer);
+  }
+}
+
+export {
+  renderProject,
+  loadProjects,
+  appendProjectSubmission,
+  removeProjectSubmission,
+};
