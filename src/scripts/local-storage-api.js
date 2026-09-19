@@ -16,6 +16,10 @@ function clearStorage() {
   localStorage.removeItem("misc");
 }
 
+function checkForProjects() {
+  return localStorage.length > 0;
+}
+
 // returns array of project titles
 function grabProjectTitles() {
   let projects = [];
@@ -60,4 +64,5 @@ export {
   clearStorage,
   grabProjectTitles,
   grabProject,
+  checkForProjects,
 };

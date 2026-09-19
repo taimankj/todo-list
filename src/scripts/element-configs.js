@@ -1,3 +1,10 @@
+import {
+  grabProject,
+  deleteProject,
+  checkForProjects,
+} from "./local-storage-api.js";
+import { renderProject, clearProjectPane } from "./dom-rendering.js";
+
 function configureTask(
   task,
   taskContainer,
@@ -29,9 +36,30 @@ function configureProjInput(projBox) {
 }
 
 function configureProjDeleteButton(delBtn) {
-  delBtn.id = "delete-proj-btn";
-  delBtn.setAttribute("command", "show-modal");
-  delBtn.setAttribute("commandfor", "del-proj-dialog");
+  delBtn.className = "del-proj-btn";
+  delBtn.addEventListener("click", (e) => {
+    // grab proj container
+    const projContainer = e.currentTarget.parentElement;
+
+    // grab proj from storage
+    let projTitle = projContainer.querySelector("p").innerText;
+    const projToDel = grabProject(projTitle);
+
+    // del proj from storage
+    deleteProject(projToDel);
+
+    // remove proj element from proj list
+    projContainer.parentElement.removeChild(projContainer);
+
+    // if, proj deleted was last in storage, clear proj pane
+    // else, load next proj
+    if (checkForProjects()) {
+      const nextProj = grabProject(localStorage.key(0));
+      renderProject(nextProj);
+    } else {
+      clearProjectPane();
+    }
+  });
 }
 
 export { configureTask, configureProjInput, configureProjDeleteButton };

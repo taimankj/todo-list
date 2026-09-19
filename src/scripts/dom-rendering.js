@@ -43,6 +43,14 @@ function renderProject(project) {
   });
 }
 
+function clearProjectPane() {
+  const projTitle = document.querySelector(".project-title");
+  const projTasks = document.querySelector(".project-tasks");
+
+  removeChildren(projTitle);
+  removeChildren(projTasks);
+}
+
 function removeChildren(parent) {
   while (parent.firstChild) {
     parent.removeChild(parent.firstChild);
@@ -123,6 +131,7 @@ function removeProjectSubmission(projInput) {
 export {
   renderProject,
   loadProjects,
+  clearProjectPane,
   appendProjectSubmission,
   removeProjectSubmission,
 };
