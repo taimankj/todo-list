@@ -6,6 +6,12 @@ function storeProject(project) {
   localStorage.setItem(project.title, parseTasksForStorage(project.tasks));
 }
 
+function deleteProject(project) {
+  let projectTitle = project.title;
+
+  localStorage.removeItem(projectTitle);
+}
+
 function clearStorage() {
   localStorage.removeItem("misc");
 }
