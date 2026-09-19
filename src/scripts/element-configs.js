@@ -1,5 +1,6 @@
 import {
   grabProject,
+  getLatestProject,
   deleteProject,
   checkForProjects,
 } from "./local-storage-api.js";
@@ -54,7 +55,7 @@ function configureProjDeleteButton(delBtn) {
     // if, proj deleted was last in storage, clear proj pane
     // else, load next proj
     if (checkForProjects()) {
-      const nextProj = grabProject(localStorage.key(0));
+      const nextProj = getLatestProject();
       renderProject(nextProj);
     } else {
       clearProjectPane();

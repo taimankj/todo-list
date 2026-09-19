@@ -9,6 +9,8 @@ import {
 // get project in localStorage
 // render project and associated tasks onto main pane
 function renderProject(project) {
+  clearProjectPane();
+
   const projectInfo = document.querySelector(".project-info");
   const projectTitle = document.createElement("h1");
   const newTaskBtn = document.createElement("button");
@@ -135,17 +137,9 @@ function createProjectInput() {
   return inputWrapper;
 }
 
-function removeProjectSubmission(projInput) {
-  const newProjContainer = document.querySelector("#new-project").parentNode;
-  if (!newProjContainer) {
-    newProjContainer.parentNode.removeChild(newProjContainer);
-  }
-}
-
 export {
   renderProject,
   loadProjects,
   clearProjectPane,
   appendProjectSubmission,
-  removeProjectSubmission,
 };

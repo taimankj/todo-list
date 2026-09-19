@@ -2,33 +2,56 @@ import { parseTasksForStorage, convertToObject } from "./json-handling.js";
 import { Project } from "./classes/project.js";
 import { Task } from "./classes/task.js";
 
+const projectTitleStorage = "projects";
+const projectTitleArr = "projectTitles";
+
+// creates an array in local storage to track what projects are made
+// also used to maintain order of projects by added
+function initializeProjTracker() {
+  localStorage.setItem(
+    projectTitleStorage,
+    JSON.stringify({
+      projectTitles: [],
+    }),
+  );
+}
+
 function storeProject(project) {
   localStorage.setItem(project.title, parseTasksForStorage(project.tasks));
+
+  let projects = JSON.parse(localStorage.getItem(projectTitleStorage));
+  projects[projectTitleArr].push(project.title);
+
+  localStorage.setItem(projectTitleStorage, JSON.stringify(projects));
+}
+
+function getLatestProject() {
+  let projects = JSON.parse(localStorage.getItem(projectTitleStorage));
+  let latestProj =
+    projects[projectTitleArr][projects[projectTitleArr].length - 1];
+  return grabProject(latestProj);
 }
 
 function deleteProject(project) {
   let projectTitle = project.title;
+  let projects = JSON.parse(localStorage.getItem(projectTitleStorage));
+  let projDeleted = projects[projectTitleArr].filter(
+    (proj) => !(proj === projectTitle),
+  );
+  projects[projectTitleArr] = projDeleted;
 
+  localStorage.setItem(projectTitleStorage, JSON.stringify(projects));
   localStorage.removeItem(projectTitle);
 }
 
-function clearStorage() {
-  localStorage.removeItem("misc");
-}
-
 function checkForProjects() {
-  return localStorage.length > 0;
+  let projects = JSON.parse(localStorage.getItem(projectTitleStorage));
+  return projects[projectTitleArr].length > 0;
 }
 
 // returns array of project titles
 function grabProjectTitles() {
-  let projects = [];
-
-  for (let i = 0; i < localStorage.length; i++) {
-    projects.push(localStorage.key(i));
-  }
-
-  return projects;
+  return JSON.parse(localStorage.getItem(projectTitleStorage))[projectTitleArr];
 }
 
 // returns queried project
@@ -61,8 +84,9 @@ function convertToProject(projectTitle, tasks) {
 export {
   storeProject,
   deleteProject,
-  clearStorage,
   grabProjectTitles,
+  getLatestProject,
   grabProject,
   checkForProjects,
+  initializeProjTracker,
 };

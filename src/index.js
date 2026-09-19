@@ -8,17 +8,15 @@ import { initializeDefault } from "./scripts/initialize-default.js";
 import {
   renderProject,
   loadProjects,
-  clearProjectPane,
   appendProjectSubmission,
-  removeProjectSubmission,
 } from "./scripts/dom-rendering.js";
 import {
   grabProject,
   storeProject,
-  deleteProject,
-  checkForProjects,
+  initializeProjTracker,
 } from "./scripts/local-storage-api.js";
 
+initializeProjTracker();
 initializeDefault();
 loadProjects();
 renderProject(grabProject("misc"));
@@ -31,10 +29,12 @@ newProj.addEventListener("click", (e) => {
   newProj.disabled = true;
 
   inputBox.focus();
+
   inputBox.addEventListener("focusout", (e) => {
     newProj.disabled = false;
-    removeProjectSubmission();
+    loadProjects();
   });
+
   inputBox.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       let projTitle = e.currentTarget.value;
