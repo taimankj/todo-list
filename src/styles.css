@@ -76,22 +76,10 @@ aside {
       rgba(89, 131, 146, 1) 69%
     ); */
     svg {
+      width: 1rem;
       color: white;
     }
   }
-}
-
-#my-projects-wrapper {
-  align-self: stretch;
-}
-
-.my-projects {
-  background-color: #fefae0;
-  color: black;
-  display: flex;
-  flex-direction: column;
-  align-items: end;
-  gap: 8px;
 }
 
 main {

@@ -1,4 +1,5 @@
 import "./styles.css";
+import "./project-list-styles.css";
 import "./task-card-styles.css";
 import "./input-styling.css";
 import { Project } from "./scripts/classes/project.js";
