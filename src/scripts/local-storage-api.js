@@ -54,4 +54,10 @@ function convertToProject(projectTitle, tasks) {
   return project;
 }
 
-export { storeProject, clearStorage, grabProjectTitles, grabProject };
+export {
+  storeProject,
+  deleteProject,
+  clearStorage,
+  grabProjectTitles,
+  grabProject,
+};

@@ -1,7 +1,10 @@
 // script will parse projects and tasks from localStorage
-import { isWednesday } from "date-fns";
 import { grabProjectTitles } from "./local-storage-api.js";
-import { configureProjInput } from "./element-configs.js";
+import {
+  configureTask,
+  configureProjInput,
+  configureProjDeleteButton,
+} from "./element-configs.js";
 
 // get project in localStorage
 // render project and associated tasks onto main pane
@@ -13,37 +16,30 @@ function renderProject(project) {
   removeChildren(tasksContainer);
 
   project.tasks.forEach((task) => {
-    const taskRootContainer = document.createElement("article");
-    const taskInfoContainer = document.createElement("article");
-    const taskTitleContainer = document.createElement("h5");
-    const dateContainer = document.createElement("p");
-    const priorityContainer = document.createElement("p");
-    const descriptionContainer = document.createElement("p");
+    const taskContainer = document.createElement("article");
+    const taskInfo = document.createElement("article");
+    const taskTitle = document.createElement("h5");
+    const taskDate = document.createElement("p");
+    const taskPriority = document.createElement("p");
+    const taskDescription = document.createElement("p");
 
-    taskRootContainer.className = "task-container";
-    taskInfoContainer.className = "task-info";
-    taskTitleContainer.className = "task-title";
-    dateContainer.className = "task-date";
-    priorityContainer.classList.add(
-      "task-priority",
-      `priority-${task.priority}`,
+    configureTask(
+      task,
+      taskContainer,
+      taskInfo,
+      taskTitle,
+      taskDate,
+      taskPriority,
+      taskDescription,
     );
-    descriptionContainer.className = "task-description";
 
-    taskTitleContainer.innerText = task.title;
-    dateContainer.innerText = task.date;
-    priorityContainer.innerText = ".";
-    descriptionContainer.innerText = task.description;
-
-    taskInfoContainer.appendChild(taskTitleContainer);
-    taskInfoContainer.appendChild(dateContainer);
-    taskInfoContainer.appendChild(priorityContainer);
-    taskInfoContainer.appendChild(descriptionContainer);
-    taskRootContainer.appendChild(taskInfoContainer);
-
-    appendTaskActions(taskRootContainer);
-
-    tasksContainer.appendChild(taskRootContainer);
+    taskInfo.appendChild(taskTitle);
+    taskInfo.appendChild(taskDate);
+    taskInfo.appendChild(taskPriority);
+    taskInfo.appendChild(taskDescription);
+    taskContainer.appendChild(taskInfo);
+    appendTaskActions(taskContainer);
+    tasksContainer.appendChild(taskContainer);
   });
 }
 
@@ -91,6 +87,8 @@ function loadProjects() {
 
     delBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>trash-can</title><path d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M9,8H11V17H9V8M13,8H15V17H13V8Z" fill="currentColor" /></svg>`;
     title.innerText = projectTitle;
+
+    configureProjDeleteButton(delBtn);
 
     projectTitleContainer.appendChild(title);
     projectTitleContainer.appendChild(delBtn);

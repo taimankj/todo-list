@@ -11,13 +11,18 @@ import {
   appendProjectSubmission,
   removeProjectSubmission,
 } from "./scripts/dom-rendering.js";
-import { grabProject, storeProject } from "./scripts/local-storage-api.js";
+import {
+  grabProject,
+  storeProject,
+  deleteProject,
+} from "./scripts/local-storage-api.js";
 
 initializeDefault();
 loadProjects();
 renderProject(grabProject("misc"));
 
 const newProj = document.querySelector("#new-project-btn");
+const delProj = document.querySelector("#confirm-proj-del");
 
 newProj.addEventListener("click", (e) => {
   appendProjectSubmission();
@@ -39,4 +44,11 @@ newProj.addEventListener("click", (e) => {
       loadProjects();
     }
   });
+});
+
+delProj.addEventListener("click", (e) => {
+  // close dialog
+  // del proj
+  // remove proj from main pain
+  // load other projects if any
 });
