@@ -15,7 +15,7 @@
 
 #new-project:focus,
 #rename-project:focus {
-  outline: none;
+  /* outline: none; */
   box-shadow: none;
   border: 1px solid transparent;
 }

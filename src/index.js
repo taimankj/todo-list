@@ -11,6 +11,7 @@ import {
   loadProjects,
   appendProjectSubmission,
   renderProjectEdit,
+  removeProjectEdit,
 } from "./scripts/dom-rendering.js";
 import {
   grabProject,
@@ -64,4 +65,10 @@ editProj.addEventListener("click", (e) => {
   let projEntered = false;
 
   renameProjectBox.focus();
+
+  renameProjectBox.addEventListener("focusout", (e) => {
+    if (!projEntered) {
+      removeProjectEdit(projTitle, editProjBtn);
+    }
+  });
 });
