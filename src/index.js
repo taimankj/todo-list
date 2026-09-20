@@ -6,6 +6,7 @@ import { Project } from "./scripts/classes/project.js";
 import { Task } from "./scripts/classes/task.js";
 import { initializeDefault } from "./scripts/initialize-default.js";
 import {
+  removeProjectSubmission,
   renderProject,
   loadProjects,
   appendProjectSubmission,
@@ -13,10 +14,9 @@ import {
 import {
   grabProject,
   storeProject,
-  initializeProjTracker,
+  checkDuplicateProject,
 } from "./scripts/local-storage-api.js";
 
-initializeProjTracker();
 initializeDefault();
 loadProjects();
 renderProject(grabProject("misc"));
@@ -26,22 +26,32 @@ const newProj = document.querySelector("#new-project-btn");
 newProj.addEventListener("click", (e) => {
   appendProjectSubmission();
   const inputBox = document.querySelector("#new-project");
-  newProj.disabled = true;
+  let projEntered = false;
 
+  newProj.disabled = true;
   inputBox.focus();
 
   inputBox.addEventListener("focusout", (e) => {
     newProj.disabled = false;
-    loadProjects();
+    if (!projEntered) {
+      removeProjectSubmission();
+    }
   });
 
   inputBox.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
+      projEntered = true;
       let projTitle = e.currentTarget.value;
       const newProj = new Project(projTitle);
+
+      if (checkDuplicateProject(newProj)) {
+        alert("No duplicates allowed");
+        removeProjectSubmission();
+        return;
+      }
+
       storeProject(newProj);
       renderProject(grabProject(projTitle));
-
       loadProjects();
     }
   });

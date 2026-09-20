@@ -127,10 +127,16 @@ function appendProjectSubmission() {
   projectsPane.appendChild(projectInput);
 }
 
+function removeProjectSubmission() {
+  const inputWrapper = document.querySelector("#input-wrapper");
+  inputWrapper.parentElement.removeChild(inputWrapper);
+}
+
 function createProjectInput() {
   const inputWrapper = document.createElement("li");
   const inputBox = document.createElement("input");
 
+  inputWrapper.id = "input-wrapper";
   configureProjInput(inputBox);
 
   inputWrapper.appendChild(inputBox);
@@ -142,4 +148,5 @@ export {
   loadProjects,
   clearProjectPane,
   appendProjectSubmission,
+  removeProjectSubmission,
 };

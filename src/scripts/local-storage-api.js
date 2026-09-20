@@ -16,13 +16,29 @@ function initializeProjTracker() {
   );
 }
 
+function checkDuplicateProject(project) {
+  let projects = JSON.parse(localStorage.getItem(projectTitleStorage));
+  if (!projects[projectTitleArr].includes(project.title)) {
+    return false;
+  }
+  return true;
+}
+
 function storeProject(project) {
+  let storageInitialized = Boolean(localStorage.getItem(projectTitleStorage));
+
+  if (!storageInitialized) {
+    initializeProjTracker();
+  }
+
   localStorage.setItem(project.title, parseTasksForStorage(project.tasks));
 
   let projects = JSON.parse(localStorage.getItem(projectTitleStorage));
-  projects[projectTitleArr].push(project.title);
 
-  localStorage.setItem(projectTitleStorage, JSON.stringify(projects));
+  if (!projects[projectTitleArr].includes(project.title)) {
+    projects[projectTitleArr].push(project.title);
+    localStorage.setItem(projectTitleStorage, JSON.stringify(projects));
+  }
 }
 
 function getLatestProject() {
@@ -89,4 +105,5 @@ export {
   grabProject,
   checkForProjects,
   initializeProjTracker,
+  checkDuplicateProject,
 };
