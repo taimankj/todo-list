@@ -1,6 +1,8 @@
 :root {
   font-size: 32px;
   box-sizing: border-box;
+  --h1-size: 2em;
+  --h1-weight: bold;
 }
 
 body {
@@ -103,8 +105,32 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 2rem;
-  max-height: 4rem;
+}
+
+#project-title-wrapper {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  h1 {
+    margin: 0;
+    font-size: var(--h1-size);
+    font-weight: var(--h1-weight);
+  }
+
+  button {
+    width: 0.8rem;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+  }
+
+  button:hover {
+    svg {
+      color: white;
+    }
+  }
 }
 
 #new-task {

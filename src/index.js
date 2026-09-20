@@ -10,6 +10,7 @@ import {
   renderProject,
   loadProjects,
   appendProjectSubmission,
+  renderProjectEdit,
 } from "./scripts/dom-rendering.js";
 import {
   grabProject,
@@ -22,6 +23,7 @@ loadProjects();
 renderProject(grabProject("misc"));
 
 const newProj = document.querySelector("#new-project-btn");
+const editProj = document.querySelector("#edit-project");
 
 newProj.addEventListener("click", (e) => {
   appendProjectSubmission();
@@ -55,4 +57,11 @@ newProj.addEventListener("click", (e) => {
       loadProjects();
     }
   });
+});
+
+editProj.addEventListener("click", (e) => {
+  const { renameProjectBox, projTitle, editProjBtn } = renderProjectEdit();
+  let projEntered = false;
+
+  renameProjectBox.focus();
 });

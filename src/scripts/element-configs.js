@@ -63,4 +63,18 @@ function configureProjDeleteButton(delBtn) {
   });
 }
 
-export { configureTask, configureProjInput, configureProjDeleteButton };
+function configureProjEdit(renameProjectBox, projTitle) {
+  renameProjectBox.setAttribute("type", "text");
+  renameProjectBox.setAttribute("minlength", "1");
+  renameProjectBox.setAttribute("maxlength", "10");
+  renameProjectBox.value = projTitle.innerText;
+  renameProjectBox.required = true;
+  renameProjectBox.id = "rename-project";
+}
+
+export {
+  configureTask,
+  configureProjInput,
+  configureProjDeleteButton,
+  configureProjEdit,
+};

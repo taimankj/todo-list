@@ -4,6 +4,7 @@ import {
   configureTask,
   configureProjInput,
   configureProjDeleteButton,
+  configureProjEdit,
 } from "./element-configs.js";
 
 // get project in localStorage
@@ -12,18 +13,27 @@ function renderProject(project) {
   clearProjectPane();
 
   const projectInfo = document.querySelector(".project-info");
+  const projectTitleWrapper = document.createElement("div");
   const projectTitle = document.createElement("h1");
+  const editProjBtn = document.createElement("button");
   const newTaskBtn = document.createElement("button");
+
+  projectTitleWrapper.id = "project-title-wrapper";
 
   projectTitle.className = "project-title";
   projectTitle.innerText = project.title;
+
+  editProjBtn.id = "edit-project";
+  editProjBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil</title><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" fill="currentColor" /></svg>`;
 
   newTaskBtn.id = "new-task";
   newTaskBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>plus</title><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" fill="currentColor" /></svg>`;
 
   renderTasks(project);
 
-  projectInfo.appendChild(projectTitle);
+  projectTitleWrapper.appendChild(projectTitle);
+  projectTitleWrapper.appendChild(editProjBtn);
+  projectInfo.appendChild(projectTitleWrapper);
   projectInfo.appendChild(newTaskBtn);
 }
 
@@ -143,10 +153,25 @@ function createProjectInput() {
   return inputWrapper;
 }
 
+function renderProjectEdit() {
+  const projectTitleWrapper = document.querySelector("#project-title-wrapper");
+  const renameProjectBox = document.createElement("input");
+  const projTitle = document.querySelector(".project-title");
+  const editProjBtn = document.querySelector("#edit-project");
+
+  configureProjEdit(renameProjectBox, projTitle);
+
+  removeChildren(projectTitleWrapper);
+  projectTitleWrapper.appendChild(renameProjectBox);
+
+  return { renameProjectBox, projTitle, editProjBtn };
+}
+
 export {
   renderProject,
   loadProjects,
   clearProjectPane,
   appendProjectSubmission,
   removeProjectSubmission,
+  renderProjectEdit,
 };

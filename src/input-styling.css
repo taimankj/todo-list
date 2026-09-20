@@ -5,7 +5,16 @@
   text-align: start;
 }
 
-#new-project:focus {
+#rename-project {
+  background-color: transparent;
+  font-size: var(--h1-size);
+  font-weight: var(--h1-weight);
+  font-family: serif;
+  text-align: start;
+}
+
+#new-project:focus,
+#rename-project:focus {
   outline: none;
   box-shadow: none;
   border: 1px solid transparent;
