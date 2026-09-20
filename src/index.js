@@ -11,12 +11,13 @@ import {
   loadProjects,
   appendProjectSubmission,
   renderProjectEdit,
-  removeProjectEdit,
+  reloadProjectEdit,
 } from "./scripts/dom-rendering.js";
 import {
   grabProject,
   storeProject,
   checkDuplicateProject,
+  changeProjTitle,
 } from "./scripts/local-storage-api.js";
 
 initializeDefault();
@@ -68,7 +69,24 @@ editProj.addEventListener("click", (e) => {
 
   renameProjectBox.addEventListener("focusout", (e) => {
     if (!projEntered) {
-      removeProjectEdit(projTitle, editProjBtn);
+      reloadProjectEdit(projTitle, editProjBtn);
+    }
+  });
+
+  renameProjectBox.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      projEntered = true;
+      let newTitle = renameProjectBox.value;
+
+      if (!checkDuplicateProject(newTitle)) {
+        changeProjTitle(projTitle.innerText, newTitle);
+        projTitle.innerText = newTitle;
+        reloadProjectEdit(projTitle, editProjBtn);
+        loadProjects();
+      } else {
+        alert("Duplicate entered or same project entered");
+        reloadProjectEdit(projTitle, editProjBtn);
+      }
     }
   });
 });

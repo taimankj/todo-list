@@ -167,7 +167,7 @@ function renderProjectEdit() {
   return { renameProjectBox, projTitle, editProjBtn };
 }
 
-function removeProjectEdit(projTitle, editProjBtn) {
+function reloadProjectEdit(projTitle, editProjBtn) {
   const projectTitleWrapper = document.querySelector("#project-title-wrapper");
   removeChildren(projectTitleWrapper);
   projectTitleWrapper.appendChild(projTitle);
@@ -181,5 +181,5 @@ export {
   appendProjectSubmission,
   removeProjectSubmission,
   renderProjectEdit,
-  removeProjectEdit,
+  reloadProjectEdit,
 };

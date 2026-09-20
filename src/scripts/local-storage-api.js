@@ -17,7 +17,15 @@ function initializeProjTracker() {
 }
 
 function checkDuplicateProject(project) {
-  let projects = JSON.parse(localStorage.getItem(projectTitleStorage));
+  let projects = grabProjects();
+
+  if (typeof project === "string") {
+    if (!projects[projectTitleArr].includes(project)) {
+      return false;
+    }
+    return true;
+  }
+
   if (!projects[projectTitleArr].includes(project.title)) {
     return false;
   }
@@ -33,7 +41,7 @@ function storeProject(project) {
 
   localStorage.setItem(project.title, parseTasksForStorage(project.tasks));
 
-  let projects = JSON.parse(localStorage.getItem(projectTitleStorage));
+  let projects = grabProjects();
 
   if (!projects[projectTitleArr].includes(project.title)) {
     projects[projectTitleArr].push(project.title);
@@ -42,7 +50,7 @@ function storeProject(project) {
 }
 
 function getLatestProject() {
-  let projects = JSON.parse(localStorage.getItem(projectTitleStorage));
+  let projects = grabProjects();
   let latestProj =
     projects[projectTitleArr][projects[projectTitleArr].length - 1];
   return grabProject(latestProj);
@@ -50,7 +58,7 @@ function getLatestProject() {
 
 function deleteProject(project) {
   let projectTitle = project.title;
-  let projects = JSON.parse(localStorage.getItem(projectTitleStorage));
+  let projects = grabProjects();
   let projDeleted = projects[projectTitleArr].filter(
     (proj) => !(proj === projectTitle),
   );
@@ -61,13 +69,17 @@ function deleteProject(project) {
 }
 
 function checkForProjects() {
-  let projects = JSON.parse(localStorage.getItem(projectTitleStorage));
+  let projects = grabProjects();
   return projects[projectTitleArr].length > 0;
 }
 
 // returns array of project titles
 function grabProjectTitles() {
-  return JSON.parse(localStorage.getItem(projectTitleStorage))[projectTitleArr];
+  return grabProjects()[projectTitleArr];
+}
+
+function grabProjects() {
+  return JSON.parse(localStorage.getItem(projectTitleStorage));
 }
 
 // returns queried project
@@ -97,6 +109,24 @@ function convertToProject(projectTitle, tasks) {
   return project;
 }
 
+function changeProjTitle(currTitle, newTitle) {
+  let currProjectTasks = localStorage.getItem(currTitle);
+  let projects = grabProjects();
+
+  localStorage.removeItem(currTitle);
+  localStorage.setItem(newTitle, currProjectTasks);
+
+  projects[projectTitleArr] = projects[projectTitleArr].map((e) => {
+    if (e === currTitle) {
+      return newTitle;
+    } else {
+      return e;
+    }
+  });
+
+  localStorage.setItem(projectTitleStorage, JSON.stringify(projects));
+}
+
 export {
   storeProject,
   deleteProject,
@@ -106,4 +136,5 @@ export {
   checkForProjects,
   initializeProjTracker,
   checkDuplicateProject,
+  changeProjTitle,
 };
