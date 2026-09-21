@@ -5,6 +5,7 @@ import {
   checkForProjects,
 } from "./local-storage-api.js";
 import { renderProject, clearProjectPane } from "./dom-rendering.js";
+import { events } from "./event-listeners.js";
 
 function configureTask(
   task,
@@ -38,29 +39,8 @@ function configureProjInput(projBox) {
 
 function configureProjDeleteButton(delBtn) {
   delBtn.className = "del-proj-btn";
-  delBtn.addEventListener("click", (e) => {
-    // grab proj container
-    const projContainer = e.currentTarget.parentElement;
 
-    // grab proj from storage
-    let projTitle = projContainer.querySelector("p").innerText;
-    const projToDel = grabProject(projTitle);
-
-    // del proj from storage
-    deleteProject(projToDel);
-
-    // remove proj element from proj list
-    projContainer.parentElement.removeChild(projContainer);
-
-    // if, proj deleted was last in storage, clear proj pane
-    // else, load next proj
-    if (checkForProjects()) {
-      const nextProj = getLatestProject();
-      renderProject(nextProj);
-    } else {
-      clearProjectPane();
-    }
-  });
+  events.fireDeleteProject(delBtn);
 }
 
 function configureProjEdit(renameProjectBox, projTitle) {

@@ -4,9 +4,12 @@ import { Task } from "./classes/task.js";
 
 const projectTitleStorage = "projects";
 const projectTitleArr = "projectTitles";
+const initState = "init";
 
-// creates an array in local storage to track what projects are made
-// also used to maintain order of projects by added
+function setInitState(state) {
+  localStorage.setItem(initState, JSON.stringify(state));
+}
+
 function initializeProjTracker() {
   localStorage.setItem(
     projectTitleStorage,
@@ -14,6 +17,19 @@ function initializeProjTracker() {
       projectTitles: [],
     }),
   );
+}
+
+function initializeStorage() {
+  let isInit = localStorage.getItem(initState);
+
+  if (isInit === null) {
+    setInitState(true);
+    initializeProjTracker();
+  }
+}
+
+function isStorageInit() {
+  return JSON.parse(localStorage.getItem(initState));
 }
 
 function checkDuplicateProject(project) {
@@ -33,12 +49,6 @@ function checkDuplicateProject(project) {
 }
 
 function storeProject(project) {
-  let storageInitialized = Boolean(localStorage.getItem(projectTitleStorage));
-
-  if (!storageInitialized) {
-    initializeProjTracker();
-  }
-
   localStorage.setItem(project.title, parseTasksForStorage(project.tasks));
 
   let projects = grabProjects();
@@ -128,6 +138,8 @@ function changeProjTitle(currTitle, newTitle) {
 }
 
 export {
+  initializeStorage,
+  isStorageInit,
   storeProject,
   deleteProject,
   grabProjectTitles,

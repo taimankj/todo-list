@@ -4,11 +4,11 @@ import "./task-card-styles.css";
 import "./input-styling.css";
 import { Project } from "./scripts/classes/project.js";
 import { Task } from "./scripts/classes/task.js";
-import { initializeDefault } from "./scripts/initialize-default.js";
+import { initializeDefaultProject } from "./scripts/initialize-default.js";
 import {
   removeProjectSubmission,
   renderProject,
-  loadProjects,
+  loadProjectsIntoNav,
   appendProjectSubmission,
   renderProjectEdit,
   reloadProjectEdit,
@@ -18,75 +18,84 @@ import {
   storeProject,
   checkDuplicateProject,
   changeProjTitle,
+  initializeStorage,
 } from "./scripts/local-storage-api.js";
+import { events } from "./scripts/event-listeners.js";
 
-initializeDefault();
-loadProjects();
-renderProject(grabProject("misc"));
+initializeStorage();
+initializeDefaultProject();
+loadProjectsIntoNav();
 
 const newProj = document.querySelector("#new-project-btn");
-const editProj = document.querySelector("#edit-project");
 
-newProj.addEventListener("click", (e) => {
-  appendProjectSubmission();
-  const inputBox = document.querySelector("#new-project");
-  let projEntered = false;
+events.fireAddProject(newProj);
+// const editProj = document.querySelector("#edit-project");
+// const projectsInNav = document.querySelectorAll(".my-projects > li > p");
 
-  newProj.disabled = true;
-  inputBox.focus();
+// projectsInNav.forEach((project) => {
+//   events.enableProjectSelection(project);
+// });
 
-  inputBox.addEventListener("focusout", (e) => {
-    newProj.disabled = false;
-    if (!projEntered) {
-      removeProjectSubmission();
-    }
-  });
+// editProj.addEventListener("click", (e) => {
+//   const { renameProjectBox, projTitle, editProjBtn } = renderProjectEdit();
+//   let projEntered = false;
 
-  inputBox.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      projEntered = true;
-      let projTitle = e.currentTarget.value;
-      const newProj = new Project(projTitle);
+//   renameProjectBox.focus();
 
-      if (checkDuplicateProject(newProj)) {
-        alert("No duplicates allowed");
-        removeProjectSubmission();
-        return;
-      }
+//   renameProjectBox.addEventListener("focusout", (e) => {
+//     if (!projEntered) {
+//       reloadProjectEdit(projTitle, editProjBtn);
+//     }
+//   });
 
-      storeProject(newProj);
-      renderProject(grabProject(projTitle));
-      loadProjects();
-    }
-  });
-});
+//   renameProjectBox.addEventListener("keydown", (e) => {
+//     if (e.key === "Enter") {
+//       projEntered = true;
+//       let newTitle = renameProjectBox.value;
 
-editProj.addEventListener("click", (e) => {
-  const { renameProjectBox, projTitle, editProjBtn } = renderProjectEdit();
-  let projEntered = false;
+//       if (!checkDuplicateProject(newTitle)) {
+//         changeProjTitle(projTitle.innerText, newTitle);
+//         projTitle.innerText = newTitle;
+//         reloadProjectEdit(projTitle, editProjBtn);
+//         loadProjects();
+//       } else {
+//         alert("Duplicate entered or same project entered");
+//         reloadProjectEdit(projTitle, editProjBtn);
+//       }
+//     }
+//   });
+// });
 
-  renameProjectBox.focus();
+// newProj.addEventListener("click", (e) => {
+//   appendProjectSubmission();
+//   const inputBox = document.querySelector("#new-project");
+//   let projEntered = false;
 
-  renameProjectBox.addEventListener("focusout", (e) => {
-    if (!projEntered) {
-      reloadProjectEdit(projTitle, editProjBtn);
-    }
-  });
+//   newProj.disabled = true;
+//   inputBox.focus();
 
-  renameProjectBox.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      projEntered = true;
-      let newTitle = renameProjectBox.value;
+//   inputBox.addEventListener("focusout", (e) => {
+//     newProj.disabled = false;
+//     if (!projEntered) {
+//       removeProjectSubmission();
+//     }
+//   });
 
-      if (!checkDuplicateProject(newTitle)) {
-        changeProjTitle(projTitle.innerText, newTitle);
-        projTitle.innerText = newTitle;
-        reloadProjectEdit(projTitle, editProjBtn);
-        loadProjects();
-      } else {
-        alert("Duplicate entered or same project entered");
-        reloadProjectEdit(projTitle, editProjBtn);
-      }
-    }
-  });
-});
+//   inputBox.addEventListener("keydown", (e) => {
+//     if (e.key === "Enter") {
+//       projEntered = true;
+//       let projTitle = e.currentTarget.value;
+//       const newProj = new Project(projTitle);
+
+//       if (checkDuplicateProject(newProj)) {
+//         alert("No duplicates allowed");
+//         removeProjectSubmission();
+//         return;
+//       }
+
+//       storeProject(newProj);
+//       renderProject(grabProject(projTitle));
+//       loadProjects();
+//     }
+//   });
+// });

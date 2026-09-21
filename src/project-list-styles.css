@@ -9,7 +9,7 @@
   flex-direction: column;
   align-items: stretch;
   padding: 0;
-  gap: 8px;
+  gap: 16px;
 
   li {
     display: flex;
@@ -19,6 +19,11 @@
     p {
       flex-grow: 1;
       margin: 0;
+    }
+
+    p:hover {
+      text-decoration: underline;
+      cursor: pointer;
     }
 
     button {
