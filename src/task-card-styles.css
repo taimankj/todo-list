@@ -7,21 +7,18 @@
   overflow: auto;
 }
 
-.task-container {
+.project-tasks > .task-container,
+.project-tasks > form {
   display: grid;
   grid-template-columns: 4fr 0.5fr;
   padding: 8px;
+  gap: 8px;
   color: white;
-
-  * {
-    margin: 0;
-    padding: 0;
-  }
 }
 
 .task-info {
   display: grid;
-  grid: 40px minmax(75px, 100px) / 2fr 200px 200px;
+  grid: 40px minmax(75px, 100px) / 2fr 200px 50px;
   grid-template-areas:
     "task-title task-date task-priority"
     "task-description task-description task-description";
@@ -30,24 +27,31 @@
   background-color: #588157;
   border-radius: 5px;
   padding: 16px;
-  margin-right: 8px;
 }
 
-.task-title {
+.task-title,
+#task-title-submit {
   grid-area: task-title;
+  font-size: var(--h4-size);
+  font-weight: var(--h4-weight);
+  margin: 0;
 }
 
-.task-date {
+.task-date,
+#task-date-submit {
   grid-area: task-date;
+  margin: 0;
 }
 
-.task-priority {
+.task-priority,
+#task-priority-submit {
   grid-area: task-priority;
   display: flex;
   justify-content: end;
   align-items: end;
   font-weight: 900;
   font-size: 3rem;
+  margin: 0;
 }
 
 .priority-high {
@@ -65,18 +69,21 @@
   /* text-shadow: rgb(0, 255, 0) 0px 0px 16px; */
 }
 
-.task-description {
+.task-description,
+#task-description-submit {
   grid-area: task-description;
   background-color: #fefae0;
   color: black;
   border-radius: 5px;
   padding: 8px;
+  margin: 0;
 
   font-size: 0.8rem;
 }
 
 /* task actions */
-.task-actions {
+.task-actions,
+#task-submission-actions {
   display: flex;
   flex-direction: column;
   align-items: start;

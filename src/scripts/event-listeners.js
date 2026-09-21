@@ -11,14 +11,18 @@ import {
 import {
   removeProjectSubmission,
   renderProject,
+  appendTask,
   loadProjectsIntoNav,
   appendProjectSubmission,
   renderProjectEdit,
   reloadProjectEdit,
   clearProjectPane,
+  appendTaskSubmission,
+  removeTaskSubmission,
 } from "./dom-rendering.js";
 
 import { Project } from "./classes/project.js";
+import { Task } from "./classes/task.js";
 
 export const events = (() => {
   const enableProjectSelection = (project) => {
@@ -122,10 +126,59 @@ export const events = (() => {
     });
   };
 
+  const fireAddTask = (addTaskBtn) => {
+    addTaskBtn.addEventListener("click", (e) => {
+      const { confirmBtn, cancelBtn } = appendTaskSubmission();
+
+      addTaskBtn.disabled = true;
+
+      confirmBtn.addEventListener("click", (e) => {
+        const taskForm = e.currentTarget.form;
+        if (taskForm) {
+          const formData = new FormData(taskForm);
+          const taskData = Object.fromEntries(formData.entries());
+          const currProj = grabProject(
+            document.querySelector(".project-title").innerText,
+          );
+
+          if (!isTaskFormEmpty(taskData)) {
+            const newTask = new Task(
+              taskData["task-title"],
+              taskData["task-date"],
+              taskData["task-priority"],
+              taskData["task-description"],
+            );
+            currProj.addTask(newTask);
+            storeProject(currProj);
+            removeTaskSubmission();
+            addTaskBtn.disabled = false;
+            appendTask(newTask);
+          } else {
+            alert("All fields are required");
+          }
+        }
+      });
+
+      cancelBtn.addEventListener("click", (e) => {
+        removeTaskSubmission();
+        addTaskBtn.disabled = false;
+      });
+    });
+  };
+
   return {
     enableProjectSelection,
     fireEditProject,
     fireAddProject,
     fireDeleteProject,
+    fireAddTask,
   };
 })();
+
+function isTaskFormEmpty(taskData) {
+  return (
+    taskData["task-date"] === "" ||
+    taskData["task-description"] === "" ||
+    taskData["task-title"] === "Task Title"
+  );
+}

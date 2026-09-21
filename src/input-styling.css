@@ -1,3 +1,4 @@
+/* Project Input */
 #new-project {
   background-color: transparent;
   font-size: 1rem;
@@ -18,4 +19,64 @@
   /* outline: none; */
   box-shadow: none;
   border: 1px solid transparent;
+}
+
+/* Task Input */
+.project-tasks > form {
+  * {
+    font-family: inherit;
+  }
+}
+
+#task-submission-info {
+  display: grid;
+  grid: 40px minmax(75px, auto) / 2fr 200px 200px;
+  grid-template-areas:
+    "task-title task-date task-priority"
+    "task-description task-description task-description";
+  gap: 8px;
+
+  background-color: #588157;
+  border-radius: 5px;
+  padding: 16px;
+
+  * {
+    background-color: #fefae0;
+    border-radius: 5px;
+    border: none;
+  }
+
+  *:focus {
+    border: none;
+    outline: none;
+  }
+}
+
+#task-title-submit {
+  border-radius: 5px;
+  padding: 8px;
+  border: none;
+}
+
+#task-priority-submit,
+#task-date-submit {
+  padding: 8px;
+  text-align: center;
+  align-content: center;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: normal;
+}
+
+#task-priority-submit {
+  option {
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: normal;
+  }
+}
+
+#task-description-submit {
+  resize: auto;
+  font-size: 0.8rem;
 }

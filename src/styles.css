@@ -3,6 +3,8 @@
   box-sizing: border-box;
   --h1-size: 2em;
   --h1-weight: bold;
+  --h4-size: 1em;
+  --h4-weight: bold;
 }
 
 body {

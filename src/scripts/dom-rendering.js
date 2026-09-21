@@ -10,6 +10,13 @@ import { events } from "./event-listeners.js";
 
 // get project in localStorage
 // render project and associated tasks onto main pane
+
+function removeChildren(parent) {
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
+}
+
 function renderProject(project) {
   clearProjectPane();
 
@@ -30,6 +37,7 @@ function renderProject(project) {
 
   newTaskBtn.id = "new-task";
   newTaskBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>plus</title><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" fill="currentColor" /></svg>`;
+  events.fireAddTask(newTaskBtn);
 
   renderTasks(project);
 
@@ -43,32 +51,38 @@ function renderTasks(project) {
   const tasksContainer = document.querySelector(".project-tasks");
   removeChildren(tasksContainer);
 
-  project.tasks.forEach((task) => {
-    const taskContainer = document.createElement("article");
-    const taskInfo = document.createElement("article");
-    const taskTitle = document.createElement("h5");
-    const taskDate = document.createElement("p");
-    const taskPriority = document.createElement("p");
-    const taskDescription = document.createElement("p");
-
-    configureTask(
-      task,
-      taskContainer,
-      taskInfo,
-      taskTitle,
-      taskDate,
-      taskPriority,
-      taskDescription,
-    );
-
-    taskInfo.appendChild(taskTitle);
-    taskInfo.appendChild(taskDate);
-    taskInfo.appendChild(taskPriority);
-    taskInfo.appendChild(taskDescription);
-    taskContainer.appendChild(taskInfo);
-    appendTaskActions(taskContainer);
+  project.tasks.toReversed().forEach((task) => {
+    const taskContainer = createTaskElement(task);
     tasksContainer.appendChild(taskContainer);
   });
+}
+
+function createTaskElement(task) {
+  const taskContainer = document.createElement("article");
+  const taskInfo = document.createElement("article");
+  const taskTitle = document.createElement("h5");
+  const taskDate = document.createElement("p");
+  const taskPriority = document.createElement("p");
+  const taskDescription = document.createElement("p");
+
+  configureTask(
+    task,
+    taskContainer,
+    taskInfo,
+    taskTitle,
+    taskDate,
+    taskPriority,
+    taskDescription,
+  );
+
+  taskInfo.appendChild(taskTitle);
+  taskInfo.appendChild(taskDate);
+  taskInfo.appendChild(taskPriority);
+  taskInfo.appendChild(taskDescription);
+  taskContainer.appendChild(taskInfo);
+  appendTaskActions(taskContainer);
+
+  return taskContainer;
 }
 
 function clearProjectPane() {
@@ -77,12 +91,6 @@ function clearProjectPane() {
 
   removeChildren(projectInfo);
   removeChildren(projTasks);
-}
-
-function removeChildren(parent) {
-  while (parent.firstChild) {
-    parent.removeChild(parent.firstChild);
-  }
 }
 
 function appendTaskActions(taskContainer) {
@@ -108,7 +116,6 @@ function appendTaskActions(taskContainer) {
   taskContainer.appendChild(buttonContainer);
 }
 
-// loads projects onto nav bar
 function loadProjectsIntoNav() {
   // grab project titles from localStorage
   const projects = grabProjectTitles();
@@ -177,6 +184,65 @@ function reloadProjectEdit(projTitle, editProjBtn) {
   projectTitleWrapper.appendChild(projTitle);
   projectTitleWrapper.appendChild(editProjBtn);
 }
+function appendTaskSubmission() {
+  const tasksContainer = document.querySelector(".project-tasks");
+
+  // grab first task in the list
+  const firstTaskReference = document.querySelector(
+    ".project-tasks > :first-child",
+  );
+
+  // insert input box before that task
+  const inputTaskForm = document.createElement("form");
+
+  inputTaskForm.innerHTML = `
+          <div id="task-submission-info">
+            <input
+              id="task-title-submit"
+              name="task-title"
+              type="text"
+              value="Task Title"
+            />
+            <input id="task-date-submit" name="task-date" type="date" />
+            <select id="task-priority-submit" name="task-priority">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            <textarea
+                cols="50"
+                rows="10"
+                placeholder="enter task description"
+                id="task-description-submit"
+                name="task-description"
+              ></textarea>
+          </div>
+          <fieldset id="task-submission-actions">
+            <button id="confirm-task-submission" form="task-submission" type="button">Submit</button>
+            <button id="cancel-task-submission" type="button">Cancel</button>
+          </fieldset>`;
+  inputTaskForm.id = "task-submission";
+  tasksContainer.insertBefore(inputTaskForm, firstTaskReference);
+
+  const confirmBtn = document.querySelector("#confirm-task-submission");
+  const cancelBtn = document.querySelector("#cancel-task-submission");
+  return { confirmBtn, cancelBtn };
+}
+
+function removeTaskSubmission(formNode) {
+  const tasksContainer = document.querySelector(".project-tasks");
+  const inputTaskForm = document.querySelector("#task-submission");
+  tasksContainer.removeChild(inputTaskForm);
+}
+
+function appendTask(task) {
+  const tasksContainer = document.querySelector(".project-tasks");
+  const taskContainer = createTaskElement(task);
+  const firstTaskReference = document.querySelector(
+    ".project-tasks > :first-child",
+  );
+  tasksContainer.insertBefore(taskContainer, firstTaskReference);
+}
 
 export {
   renderProject,
@@ -186,4 +252,7 @@ export {
   removeProjectSubmission,
   renderProjectEdit,
   reloadProjectEdit,
+  appendTaskSubmission,
+  removeTaskSubmission,
+  appendTask,
 };
