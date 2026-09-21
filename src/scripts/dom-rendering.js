@@ -80,7 +80,7 @@ function createTaskElement(task) {
   taskInfo.appendChild(taskPriority);
   taskInfo.appendChild(taskDescription);
   taskContainer.appendChild(taskInfo);
-  appendTaskActions(taskContainer);
+  appendTaskActions(taskContainer, task);
 
   return taskContainer;
 }
@@ -93,7 +93,7 @@ function clearProjectPane() {
   removeChildren(projTasks);
 }
 
-function appendTaskActions(taskContainer) {
+function appendTaskActions(taskContainer, task) {
   const buttonContainer = document.createElement("div");
   const viewMore = document.createElement("button");
   const deleteTask = document.createElement("button");
@@ -106,8 +106,14 @@ function appendTaskActions(taskContainer) {
   editTask.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil</title><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" fill="currentColor" /></svg>`;
 
   buttonContainer.className = "task-actions";
+
   viewMore.className = "view-task-info-btn";
+
   deleteTask.className = "delete-task-btn";
+  deleteTask.setAttribute("name", "task-id");
+  deleteTask.setAttribute("value", task.taskID);
+  events.fireDeleteTask(deleteTask);
+
   editTask.className = "edit-task-btn";
 
   buttonContainer.appendChild(viewMore);
@@ -184,6 +190,7 @@ function reloadProjectEdit(projTitle, editProjBtn) {
   projectTitleWrapper.appendChild(projTitle);
   projectTitleWrapper.appendChild(editProjBtn);
 }
+
 function appendTaskSubmission() {
   const tasksContainer = document.querySelector(".project-tasks");
 
@@ -229,7 +236,7 @@ function appendTaskSubmission() {
   return { confirmBtn, cancelBtn };
 }
 
-function removeTaskSubmission(formNode) {
+function removeTaskSubmission() {
   const tasksContainer = document.querySelector(".project-tasks");
   const inputTaskForm = document.querySelector("#task-submission");
   tasksContainer.removeChild(inputTaskForm);
@@ -244,6 +251,11 @@ function appendTask(task) {
   tasksContainer.insertBefore(taskContainer, firstTaskReference);
 }
 
+function removeTask(taskContainer) {
+  const projectTaskContainer = document.querySelector(".project-tasks");
+  projectTaskContainer.removeChild(taskContainer);
+}
+
 export {
   renderProject,
   loadProjectsIntoNav,
@@ -255,4 +267,5 @@ export {
   appendTaskSubmission,
   removeTaskSubmission,
   appendTask,
+  removeTask,
 };

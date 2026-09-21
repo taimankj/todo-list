@@ -16,16 +16,8 @@ export class Project {
     this._tasks.push(task);
   }
 
-  removeTask(task) {
-    this.tasks = this.tasks.filter(
-      (ele) =>
-        !(
-          ele.title === task.title &&
-          ele.date === task.date &&
-          ele.priority === task.priority &&
-          ele.description === task.description
-        ),
-    );
+  removeTask(taskID) {
+    this.tasks = this.tasks.filter((task) => !(task.taskID === taskID));
   }
 
   get title() {

@@ -4,6 +4,7 @@ export class Task {
     this._date = date;
     this._priority = priority;
     this._description = description;
+    this._taskID = crypto.randomUUID();
   }
 
   get title() {
@@ -36,5 +37,13 @@ export class Task {
 
   set description(description) {
     this._description = description;
+  }
+
+  get taskID() {
+    return this._taskID;
+  }
+
+  set taskID(taskID) {
+    this._taskID = taskID;
   }
 }

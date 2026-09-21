@@ -15,7 +15,12 @@ function parseTasksForStorage(projTasks) {
   let tasksObj = {};
 
   projTasks.forEach((task) => {
-    tasksObj[task.title] = [task.date, task.priority, task.description];
+    tasksObj[task.taskID] = [
+      task.title,
+      task.date,
+      task.priority,
+      task.description,
+    ];
   });
 
   return JSON.stringify(tasksObj);

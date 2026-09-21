@@ -107,11 +107,12 @@ function convertToProject(projectTitle, tasks) {
 
   const projectTasks = convertToObject(tasks);
 
-  for (const [taskName, taskInfo] of Object.entries(projectTasks)) {
-    const currTask = new Task(taskName);
-    currTask.date = taskInfo[0];
-    currTask.priority = taskInfo[1];
-    currTask.description = taskInfo[2];
+  for (const [taskID, taskInfo] of Object.entries(projectTasks)) {
+    const currTask = new Task(taskInfo[0]);
+    currTask.date = taskInfo[1];
+    currTask.priority = taskInfo[2];
+    currTask.description = taskInfo[3];
+    currTask.taskID = taskID;
 
     project.addTask(currTask);
   }
@@ -137,6 +138,12 @@ function changeProjTitle(currTitle, newTitle) {
   localStorage.setItem(projectTitleStorage, JSON.stringify(projects));
 }
 
+function removeTaskFromStorage(projTitle, taskID) {
+  const proj = grabProject(projTitle);
+  proj.removeTask(taskID);
+  storeProject(proj);
+}
+
 export {
   initializeStorage,
   isStorageInit,
@@ -149,4 +156,5 @@ export {
   initializeProjTracker,
   checkDuplicateProject,
   changeProjTitle,
+  removeTaskFromStorage,
 };

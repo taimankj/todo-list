@@ -6,6 +6,7 @@ import {
   deleteProject,
   getLatestProject,
   checkForProjects,
+  removeTaskFromStorage,
 } from "./local-storage-api.js";
 
 import {
@@ -19,6 +20,7 @@ import {
   clearProjectPane,
   appendTaskSubmission,
   removeTaskSubmission,
+  removeTask,
 } from "./dom-rendering.js";
 
 import { Project } from "./classes/project.js";
@@ -166,12 +168,23 @@ export const events = (() => {
     });
   };
 
+  const fireDeleteTask = (delTaskBtn) => {
+    delTaskBtn.addEventListener("click", () => {
+      const taskContainer = delTaskBtn.parentElement.parentElement;
+      const projTitle = document.querySelector(".project-title").innerText;
+      const taskID = delTaskBtn.value;
+      removeTask(taskContainer);
+      removeTaskFromStorage(projTitle, taskID);
+    });
+  };
+
   return {
     enableProjectSelection,
     fireEditProject,
     fireAddProject,
     fireDeleteProject,
     fireAddTask,
+    fireDeleteTask,
   };
 })();
 
