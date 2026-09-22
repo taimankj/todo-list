@@ -1,3 +1,5 @@
+import { Task } from "./task.js";
+
 export class Project {
   constructor(title) {
     this._tasks = [];
@@ -18,6 +20,17 @@ export class Project {
 
   removeTask(taskID) {
     this.tasks = this.tasks.filter((task) => !(task.taskID === taskID));
+  }
+
+  editTask(taskID, title, date, priority, description) {
+    this.tasks = this.tasks.map((task) => {
+      if (taskID === task.taskID) {
+        const editedTask = new Task(title, date, priority, description);
+        editedTask.taskID = taskID;
+        return editedTask;
+      }
+      return task;
+    });
   }
 
   get title() {

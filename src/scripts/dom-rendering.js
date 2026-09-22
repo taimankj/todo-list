@@ -5,6 +5,8 @@ import {
   configureProjInput,
   configureProjDeleteButton,
   configureProjEdit,
+  configureNewTaskForm,
+  configureTaskEditForm,
 } from "./element-configs.js";
 import { events } from "./event-listeners.js";
 
@@ -115,6 +117,9 @@ function appendTaskActions(taskContainer, task) {
   events.fireDeleteTask(deleteTask);
 
   editTask.className = "edit-task-btn";
+  editTask.setAttribute("name", "task-id");
+  editTask.setAttribute("value", task.taskID);
+  events.fireEditTask(editTask);
 
   buttonContainer.appendChild(viewMore);
   buttonContainer.appendChild(editTask);
@@ -201,34 +206,7 @@ function appendTaskSubmission() {
 
   // insert input box before that task
   const inputTaskForm = document.createElement("form");
-
-  inputTaskForm.innerHTML = `
-          <div id="task-submission-info">
-            <input
-              id="task-title-submit"
-              name="task-title"
-              type="text"
-              value="Task Title"
-            />
-            <input id="task-date-submit" name="task-date" type="date" />
-            <select id="task-priority-submit" name="task-priority">
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-              </select>
-            <textarea
-                cols="50"
-                rows="10"
-                placeholder="enter task description"
-                id="task-description-submit"
-                name="task-description"
-              ></textarea>
-          </div>
-          <fieldset id="task-submission-actions">
-            <button id="confirm-task-submission" form="task-submission" type="button">Submit</button>
-            <button id="cancel-task-submission" type="button">Cancel</button>
-          </fieldset>`;
-  inputTaskForm.id = "task-submission";
+  configureNewTaskForm(inputTaskForm);
   tasksContainer.insertBefore(inputTaskForm, firstTaskReference);
 
   const confirmBtn = document.querySelector("#confirm-task-submission");
@@ -256,6 +234,56 @@ function removeTask(taskContainer) {
   projectTaskContainer.removeChild(taskContainer);
 }
 
+function editTask(taskID, taskCard) {
+  const tasksContainer = document.querySelector(".project-tasks");
+  const taskCardSibling = taskCard.nextSibling;
+  const taskEditForm = document.createElement("form");
+
+  configureTaskEditForm(taskEditForm, taskCard);
+  const formID = taskEditForm.id;
+
+  if (taskCardSibling) {
+    tasksContainer.insertBefore(taskEditForm, taskCardSibling);
+  } else {
+    tasksContainer.appendChild(taskEditForm);
+  }
+
+  const confirmBtn = taskEditForm.querySelector("#confirm-task-edit");
+  const cancelBtn = taskEditForm.querySelector("#cancel-task-edit");
+
+  events.fireConfirmEdit(confirmBtn, taskCard, taskID, formID);
+  events.fireCancelEdit(cancelBtn, taskCard, formID);
+
+  return { formID, confirmBtn, cancelBtn };
+}
+
+function removeEditTask(form, taskCard) {
+  const tasksContainer = document.querySelector(".project-tasks");
+  const formSibling = form.nextSibling;
+
+  if (formSibling) {
+    tasksContainer.insertBefore(taskCard, formSibling);
+  } else {
+    tasksContainer.appendChild(taskCard);
+  }
+
+  tasksContainer.removeChild(form);
+}
+
+function changeTaskCard(taskCard, title, date, priority, description) {
+  const taskTitle = taskCard.querySelector(".task-title");
+  const taskDate = taskCard.querySelector(".task-date");
+  const taskPriority = taskCard.querySelector(".task-priority");
+  const taskDescription = taskCard.querySelector(".task-description");
+
+  taskCard.id = title.split(" ").join("-");
+  taskTitle.innerText = title;
+  taskDate.innerText = date;
+  taskPriority.className = "";
+  taskPriority.classList.add("task-priority", `priority-${priority}`);
+  taskDescription.innerText = description;
+}
+
 export {
   renderProject,
   loadProjectsIntoNav,
@@ -268,4 +296,7 @@ export {
   removeTaskSubmission,
   appendTask,
   removeTask,
+  editTask,
+  removeEditTask,
+  changeTaskCard,
 };

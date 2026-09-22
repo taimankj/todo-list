@@ -21,6 +21,9 @@ import {
   appendTaskSubmission,
   removeTaskSubmission,
   removeTask,
+  editTask,
+  removeEditTask,
+  changeTaskCard,
 } from "./dom-rendering.js";
 
 import { Project } from "./classes/project.js";
@@ -173,8 +176,56 @@ export const events = (() => {
       const taskContainer = delTaskBtn.parentElement.parentElement;
       const projTitle = document.querySelector(".project-title").innerText;
       const taskID = delTaskBtn.value;
-      removeTask(taskContainer);
+      removeTask(taskContainer); // removes task from DOM
       removeTaskFromStorage(projTitle, taskID);
+    });
+  };
+
+  const fireEditTask = (editTaskBtn) => {
+    editTaskBtn.addEventListener("click", (e) => {
+      const currentTaskCard = editTaskBtn.parentElement.parentElement;
+      const taskID = e.currentTarget.value;
+
+      const { formID, confirmBtn, cancelBtn } = editTask(
+        taskID,
+        currentTaskCard,
+      );
+
+      removeTask(currentTaskCard);
+    });
+  };
+
+  const fireConfirmEdit = (confirmBtn, taskCard, taskID, formID) => {
+    confirmBtn.addEventListener("click", (e) => {
+      const taskForm = e.currentTarget.form;
+
+      if (taskForm) {
+        const formData = new FormData(taskForm);
+        const taskData = Object.fromEntries(formData.entries());
+        const currProj = grabProject(
+          document.querySelector(".project-title").innerText,
+        );
+
+        if (!isTaskFormEmpty(taskData)) {
+          let title = taskData["task-title"];
+          let date = taskData["task-date"];
+          let priority = taskData["task-priority"];
+          let description = taskData["task-description"];
+
+          currProj.editTask(taskID, title, date, priority, description);
+          storeProject(currProj);
+          changeTaskCard(taskCard, title, date, priority, description);
+          removeEditTask(document.querySelector(`#${formID}`), taskCard);
+        } else {
+          alert("All fields are required");
+        }
+      }
+    });
+  };
+
+  const fireCancelEdit = (cancelBtn, taskCard, formID) => {
+    cancelBtn.addEventListener("click", (e) => {
+      removeEditTask(document.querySelector(`#${formID}`), taskCard);
     });
   };
 
@@ -185,6 +236,9 @@ export const events = (() => {
     fireDeleteProject,
     fireAddTask,
     fireDeleteTask,
+    fireEditTask,
+    fireConfirmEdit,
+    fireCancelEdit,
   };
 })();
 
