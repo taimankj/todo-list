@@ -24,6 +24,8 @@ import {
   editTask,
   removeEditTask,
   changeTaskCard,
+  viewMore,
+  hideTaskDescription,
 } from "./dom-rendering.js";
 
 import { Project } from "./classes/project.js";
@@ -229,6 +231,20 @@ export const events = (() => {
     });
   };
 
+  const fireViewMore = (viewBtn) => {
+    viewBtn.addEventListener("click", (e) => {
+      const taskContainer = e.currentTarget.parentElement.parentElement;
+      viewMore(taskContainer);
+    });
+  };
+
+  const fireMinimizeTask = (hideTaskBtn) => {
+    hideTaskBtn.addEventListener("click", (e) => {
+      const taskContainer = e.currentTarget.parentElement.parentElement;
+      hideTaskDescription(taskContainer);
+    });
+  };
+
   return {
     enableProjectSelection,
     fireEditProject,
@@ -239,6 +255,8 @@ export const events = (() => {
     fireEditTask,
     fireConfirmEdit,
     fireCancelEdit,
+    fireViewMore,
+    fireMinimizeTask,
   };
 })();
 

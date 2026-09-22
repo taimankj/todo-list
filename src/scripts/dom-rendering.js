@@ -63,8 +63,8 @@ function createTaskElement(task) {
   const taskContainer = document.createElement("article");
   const taskInfo = document.createElement("article");
   const taskTitle = document.createElement("h5");
-  const taskDate = document.createElement("p");
-  const taskPriority = document.createElement("p");
+  const taskDate = document.createElement("div");
+  const taskPriority = document.createElement("div");
   const taskDescription = document.createElement("p");
 
   configureTask(
@@ -110,6 +110,7 @@ function appendTaskActions(taskContainer, task) {
   buttonContainer.className = "task-actions";
 
   viewMore.className = "view-task-info-btn";
+  events.fireViewMore(viewMore);
 
   deleteTask.className = "delete-task-btn";
   deleteTask.setAttribute("name", "task-id");
@@ -284,6 +285,22 @@ function changeTaskCard(taskCard, title, date, priority, description) {
   taskDescription.innerText = description;
 }
 
+function viewMore(taskContainer) {
+  const viewMoreBtn = taskContainer.querySelector(".view-task-info-btn");
+  taskContainer.classList.add("view-more");
+
+  viewMoreBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" ><title>eye-closed</title><path d="M12 17.5C8.2 17.5 4.8 15.4 3.2 12H1C2.7 16.4 7 19.5 12 19.5S21.3 16.4 23 12H20.8C19.2 15.4 15.8 17.5 12 17.5Z" fill="currentColor"/></svg>`;
+  events.fireMinimizeTask(viewMoreBtn);
+}
+
+function hideTaskDescription(taskContainer) {
+  const hideTaskBtn = taskContainer.querySelector(".view-task-info-btn");
+  taskContainer.className = "task-container";
+
+  hideTaskBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>eye</title><path d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z" fill="currentColor" /></svg>`;
+  events.fireViewMore(hideTaskBtn);
+}
+
 export {
   renderProject,
   loadProjectsIntoNav,
@@ -299,4 +316,6 @@ export {
   editTask,
   removeEditTask,
   changeTaskCard,
+  viewMore,
+  hideTaskDescription,
 };

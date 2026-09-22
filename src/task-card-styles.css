@@ -16,6 +16,9 @@
   color: white;
 }
 
+.view-more {
+}
+
 .task-info {
   display: grid;
   grid: 40px minmax(75px, 100px) / 2fr 200px 50px;
@@ -54,6 +57,11 @@
   margin: 0;
 }
 
+.task-priority {
+  user-select: none;
+  align-items: start;
+}
+
 .priority-high {
   color: red;
   /* text-shadow: rgba(255, 0, 0, 1) 0px 0px 16px; */
@@ -77,6 +85,8 @@
   border-radius: 5px;
   padding: 8px;
   margin: 0;
+
+  overflow: auto;
 
   font-size: 0.8rem;
 }
