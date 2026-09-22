@@ -77,8 +77,12 @@ function configureNewTaskForm(form) {
                 ></textarea>
             </div>
             <fieldset id="task-submission-actions">
-              <button id="confirm-task-submission" form="task-submission" type="button">Submit</button>
-              <button id="cancel-task-submission" type="button">Cancel</button>
+              <button id="confirm-task-submission" form="task-submission" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>check-bold</title><path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" fill="currentColor" /></svg>
+              </button>
+              <button id="cancel-task-submission" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>close-thick</title><path d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z" fill="currentColor" /></svg>
+              </button>
             </fieldset>`;
   form.id = "task-submission";
 }
@@ -110,8 +114,12 @@ function configureTaskEditForm(form, taskCard) {
                 >${description}</textarea>
             </div>
             <fieldset id="task-submission-actions">
-              <button id="confirm-task-edit" form="${formID}" type="button">Submit</button>
-              <button id="cancel-task-edit" type="button">Cancel</button>
+              <button id="confirm-task-edit" form="${formID}" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>check-bold</title><path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" fill="currentColor" /></svg>
+              </button>
+              <button id="cancel-task-edit" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>close-thick</title><path d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z" fill="currentColor" /></svg>
+              </button>
             </fieldset>`;
 }
 

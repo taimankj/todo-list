@@ -80,3 +80,43 @@
   resize: auto;
   font-size: 0.8rem;
 }
+
+#task-submission-actions {
+  padding: 0;
+  margin: 0;
+  border: none;
+
+  button {
+    border: none;
+    outline: none;
+    padding: 0;
+
+    svg {
+      width: 1rem;
+    }
+  }
+
+  #confirm-task-submission:hover {
+    svg {
+      color: green;
+    }
+  }
+
+  #cancel-task-submission:hover {
+    svg {
+      color: red;
+    }
+  }
+
+  #confirm-task-edit:hover {
+    svg {
+      color: green;
+    }
+  }
+
+  #cancel-task-edit:hover {
+    svg {
+      color: red;
+    }
+  }
+}

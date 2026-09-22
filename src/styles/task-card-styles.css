@@ -4,31 +4,28 @@
   flex-direction: column;
   justify-content: start;
   align-items: stretch;
-  overflow: auto;
+  gap: 24px;
 }
 
-.project-tasks > .task-container,
+.task-container,
 .project-tasks > form {
   display: grid;
-  grid-template-columns: 4fr 0.5fr;
+  grid-template-columns: 4fr auto;
   padding: 8px;
   gap: 8px;
   color: white;
 }
 
-.view-more {
-}
-
 .task-info {
   display: grid;
-  grid: 40px minmax(75px, 100px) / 2fr 200px 50px;
+  grid: 40px minmax(100px, auto) / 2fr 200px 50px;
   grid-template-areas:
     "task-title task-date task-priority"
     "task-description task-description task-description";
   row-gap: 8px;
 
   background-color: #588157;
-  border-radius: 5px;
+  border-radius: 10px;
   padding: 16px;
 }
 
@@ -57,11 +54,6 @@
   margin: 0;
 }
 
-.task-priority {
-  user-select: none;
-  align-items: start;
-}
-
 .priority-high {
   color: red;
   /* text-shadow: rgba(255, 0, 0, 1) 0px 0px 16px; */
@@ -86,7 +78,9 @@
   padding: 8px;
   margin: 0;
 
+  resize: vertical;
   overflow: auto;
+  min-height: 100px;
 
   font-size: 0.8rem;
 }
@@ -96,7 +90,7 @@
 #task-submission-actions {
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: center;
   justify-content: space-evenly;
 
   button {
@@ -110,6 +104,12 @@
   button:hover {
     svg {
       color: white;
+    }
+  }
+
+  .delete-task-btn:hover {
+    svg {
+      color: red;
     }
   }
 }
